@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Wedge, Circle
 
-def plot_nuc(L):
+def plot_nuc(L,abscisse,figure):
     plt.rcParams['figure.figsize']=10,10
-    figure =plt.figure()
-    figure.clf()
+    #figure =plt.figure(0)
+    #figure.clf()
 
     for i_n,nucleosome in enumerate(L):
         for i_h,histone in enumerate(nucleosome):
@@ -16,20 +16,20 @@ def plot_nuc(L):
                 th1=180
                 th2=360
             if histone[0]==0:
-                fc='royalblue'
+                fc='red'
             elif histone[0]==1:
                 fc='grey'
             elif histone[0]==2:
-                fc='red'
+                fc='royalblue'
 
-            w= Wedge(center=[i_n,0], r=.5, theta1=th1, theta2=th2, facecolor=fc)
+            w= Wedge(center=[i_n,abscisse], r=.5, theta1=th1, theta2=th2, facecolor=fc)
             figure.gca().add_patch(w)
 
             if histone[1]==1:
                 if i_h==0:
-                    c = Circle(xy=[i_n,0.5/2],radius=0.2,color='black')
+                    c = Circle(xy=[i_n,abscisse+0.5/2],radius=0.2,color='black')
                 elif i_h==1:
-                    c = Circle(xy=[i_n,-0.5/2],radius=0.2,color='black')
+                    c = Circle(xy=[i_n,abscisse-0.5/2],radius=0.2,color='black')
                 figure.gca().add_patch(c)
 
 

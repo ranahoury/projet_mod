@@ -60,12 +60,12 @@ def simulation(winter, spring,n=35): #winter et srping en jours
         Pn=(model.C*(i**2)/(model.K*(1440**2)+i**2))
         for j in range(len(L)):
             L[j]= model.evol(L[j],T,Pn)
-        if i%10==0:
-            liste.append(L)
+        if i%7200==0:                      #7200 minutes =5 jours
+            liste.append(np.copy(L))
     T=1
     for i in range(spring*1440):
         for j in range(len(L)):
             L[j]= model.evol(L[j],T,Pn)
-        if i%10==0:
-            liste.append(L)
+        if i%7200==0:
+            liste.append(np.copy(L))
     return(liste)
