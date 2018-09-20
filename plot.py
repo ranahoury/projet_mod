@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Wedge, Circle
+import saving
 
 def plot_nuc(L,abscisse,figure):
     """Visualization of H3 histones as 2 half-circles
@@ -68,18 +69,30 @@ def plot_nuc(L,abscisse,figure):
 
 
         
-def histo_nuc(p,fig):   
-    """ Plot histogram  
+def histo_nuc(L,fig):   
+    """ Plotting histograms for frequencies of nucleosomes' states and nucleations
     
+    Function allows to plot histograms for the frequency of each state (activated, unmodefied and methylated) as well as the frequency of nucleation of the nucleosomes of the gene of interest (FLC) 
     
+    Parameters
+    __________
     
+    L: list of histones/nucleosomes containing the information about epigenetic marks (0 - acetylated, 1 - unmodified, 2 - methylated), as well as whether a histone=>nucleosome is nucleated or not (0 - non-nucleated, 1 - nucleated).
     
+    fig: the figure to be used to present the new histogram 
+    
+    Returns 
+    _________
+    None
+    _________________________
+    
+    Rana 
     """
-    p=np.ndarray.tolist(p)# liste pour count pour histo
+    L=np.ndarray.tolist(L)# liste pour count pour histo
     count ={}
     for state in [0,1,2]:
         for nucleation in [0,1]:
-            count[(state, nucleation)]= p.count([state, nucleation])
+            count[(state, nucleation)]= L.count([state, nucleation])
     h = [1,2,3,4,5,6]
     BarName = ['[0, 0]','[0, 1]','[1, 0]','[1, 1]','[2, 0]','[2, 1]']
     fig.clf()
@@ -102,13 +115,28 @@ def histo_nuc(p,fig):
 
 
 def draw(L):
+    """ Plotting histograms for every chosen checkpoint    
+    
+    Function uses the function "histo nuc" to draw histograms for each day at the specified rate of days in the simulation function
+    
+    Parameters
+    __________
+    L: list of histones/nucleosomes containing the information about epigenetic marks (0 - acetylated, 1 - unmodified, 2 - methylated), as well as whether a histone=>nucleosome is nucleated or not (0 - non-nucleated, 1 - nucleated).
+    
+    Returns
+    _______
+    
+    None
+    ___________________
+    Rana  
+    """
     p=[]
     fig =plt.figure(0)
     for i,l in enumerate(L):
-        p=unlist(l)
+        p=saving.unlist(l)
         p=np.array(p)
         #np.savetxt( "p"+str(i)+".txt",p, delimiter=",")
         histo_nuc(p,fig)
-        fig.savefig('SimpleBar'+str(i)+'.png')
+        fig.savefig('histo_gif'+str(i)+'.png')
     return
     
