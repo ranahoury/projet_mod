@@ -3,9 +3,34 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Wedge, Circle
 
 def plot_nuc(L,abscisse,figure):
+    """Visualization of H3 histones as 2 half-circles
+    
+    Function allows to visualize the proportion of acetylated (activated)/methylated (suppressed)/unmodified nucleosomes of the gene of interest             (FLC, in our case)
+    
+    Parameters
+    __________
+    
+    param1 : L
+             A list of histones/nucleosomes containing the information about epigenetic marks (0 - acetylated, 1 - unmodified, 2 - methylated), as well     as whether a histone=>nucleosome is nucleated or not (0 - non-nucleated, 1 - nucleated).
+             
+    param2 : abscisse
+             A value to be specified to determine the heigth of 'the nucleosome line'.
+             
+    param3 : figure
+             The parameter have to be associated with the plotting function => #1.
+             
+    Returns
+    _______
+    
+    None
+    _________________________
+    Вивчайте українську мову :)
+    Кирило.
+    """
+    
     plt.rcParams['figure.figsize']=10,10
-    #figure =plt.figure(0)
-    #figure.clf()
+    #1)figure =plt.figure(0)
+    #2)figure.clf()
 
     for i_n,nucleosome in enumerate(L):
         for i_h,histone in enumerate(nucleosome):
