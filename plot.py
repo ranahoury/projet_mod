@@ -29,10 +29,11 @@ def plot_nuc(L,abscisse,figure):
     Кирило.
     """
     
-    plt.rcParams['figure.figsize']=10,10
+    plt.rcParams['figure.figsize']=10,10 #figure size adjustment
     #1)figure =plt.figure(0)
     #2)figure.clf()
 
+    #the loop allocating the color to 1 of 3 possible states of H3 histone (epigenetic marks)
     for i_n,nucleosome in enumerate(L):
         for i_h,histone in enumerate(nucleosome):
             if i_h==0:
@@ -47,10 +48,10 @@ def plot_nuc(L,abscisse,figure):
                 fc='grey'
             elif histone[0]==2:
                 fc='royalblue'
-
+            #the patch drawing half-circles
             w= Wedge(center=[i_n,abscisse], r=.5, theta1=th1, theta2=th2, facecolor=fc)
             figure.gca().add_patch(w)
-
+            #if a histone is nucleated, black circle will appear on the half-circle
             if histone[1]==1:
                 if i_h==0:
                     c = Circle(xy=[i_n,abscisse+0.5/2],radius=0.2,color='black')
