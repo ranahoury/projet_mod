@@ -76,8 +76,7 @@ def activation(etat):
         act=act+etat.count([0, nucleation])
     return act
 
-def simulation(winter, spring,n=35): #winter et srping en jours
-    model=Model()
+def simulation(winter, spring, pas=10, n=35,model=Model()): #winter et srping en jours
     L=np.array([[[0,0],[0,0]] for i in range(n)])
     liste=[np.copy(L)]
     gene=[]
@@ -86,7 +85,7 @@ def simulation(winter, spring,n=35): #winter et srping en jours
         Pn=(model.C*(i**2)/(model.K*(1440**2)+i**2))
         for j in range(len(L)):
             L[j]= model.evol(L[j],T,Pn)
-        if i%14400==0:                      #7200 minutes =5 jours
+        if i%1440*pas==0:                      #7200 minutes =5 jours
             liste.append(np.copy(L))
         if i%60==0:
             gene.append(activation(L))
@@ -94,7 +93,7 @@ def simulation(winter, spring,n=35): #winter et srping en jours
     for i in range(spring*1440):
         for j in range(len(L)):
             L[j]= model.evol(L[j],T,Pn)
-        if i%14400==0:
+        if i%1440*pas==0:
             liste.append(np.copy(L))
         if i%60==0:
             gene.append(activation(L))
