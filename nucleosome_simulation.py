@@ -23,10 +23,11 @@ class Model(object):
         self.MT=np.array([[-self.eps, 0, self.eps], [0 ,-self.eps ,self.eps], [0, 0, 0]])
         self.Mcoopa=np.array([[0,0,0],[1,-1,0],[0,1,-1]])
         self.Mcoopm=np.array([[-1,1,0],[0,-1,1],[0,0,0]])
-
+        
+    def evol(self,nuc,T,Pn):
         """Evolution of the nucleation during the time and depending on the temperature
         
-        This function allows changing of the nucleation probability during the time (0 enucleated, 1 nucleated), depending on the cold (T==0) or the warm (T==1)
+        The first part of evol function allows changing of the nucleation probability during the time (0 enucleated, 1 nucleated), depending on the cold (T==0) or the warm (T==1)
         
         Parameters
         __________
@@ -43,8 +44,24 @@ class Model(object):
     
         Cécile
         """
+        """Impact of the neighbors on the methylation
         
-    def evol(self,nuc,T,Pn):
+            The second part of this function changes the probability of methylation/acetylation depending on the neighbors methylation/acetylation : if one or two neighbor(s) of one histones are methylated, this histone has more changes to be methylated. 
+
+            Parameters
+            __________
+            l = a list used to know the neighbouring histone's rank by removing the current histone'srank from l
+            M = the Stochastic matrix for state changes in the current situation
+            coopa = the probability we add to the transition M->U  and U->A when neigbourh is acetylated
+            coopm = the probability we add to the transition A->U  and U->M when neigbourh is acetylated
+            
+            Returns 
+            _________
+            nuc = the histone modified
+            _________________________
+    
+            Cécile & Achille
+            """
         for i in range(2):
             if T==0:
                 r=random()
@@ -54,24 +71,6 @@ class Model(object):
                 r=random()
                 if r<=self.Pdn:
                     nuc[1]=0
-
-            """Impact of the neighbors on the methylation
-        
-            This function changes the probability of methylation depending on the neighbors methylation : if one or two neighbor(s) of one histones are methylated, this histone has more changes to be methylated. 
-
-            Parameters
-            __________
-            l = 
-            
-
-            Returns 
-            _________
-            None
-            _________________________
-    
-            Cécile
-            """
-
             l=[0,1]
             l.remove(i)
             j=l[0]
@@ -123,7 +122,7 @@ def simulation(winter, spring, pas=10, n=35,model=Model()): #winter et srping en
         Pn=(model.C*(i**2)/(model.K*(1440**2)+i**2))
         for j in range(len(L)):
             L[j]= model.evol(L[j],T,Pn)
-        if i%1440*pas==0:                      #7200 minutes =5 jours
+        if i%(1440*pas)==0:                      #1440 minutes =1 jours
             liste.append(np.copy(L))
         if i%60==0:
             gene.append(activation(L))
@@ -131,7 +130,7 @@ def simulation(winter, spring, pas=10, n=35,model=Model()): #winter et srping en
     for i in range(spring*1440):
         for j in range(len(L)):
             L[j]= model.evol(L[j],T,Pn)
-        if i%1440*pas==0:
+        if i%(1440*pas)==0:
             liste.append(np.copy(L))
         if i%60==0:
             gene.append(activation(L))
