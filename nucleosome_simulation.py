@@ -24,6 +24,26 @@ class Model(object):
         self.Mcoopa=np.array([[0,0,0],[1,-1,0],[0,1,-1]])
         self.Mcoopm=np.array([[-1,1,0],[0,-1,1],[0,0,0]])
 
+        """Evolution of the nucleation during the time and depending on the temperature
+        
+        This function allows changing of the nucleation probability during the time (0 enucleated, 1 nucleated), depending on the cold (T==0) or the warm (T==1)
+        
+        Parameters
+        __________
+         
+        T = the temperature (0 or 1 for cold or warm)
+        r = random number between 0 and 1
+        Pdn = probability in summer for the histone to be nucleated, this parameter has a fixed value given in the article
+        Pn = probability in winter for the histone to be nucleated, its value changes depending on the function "simulation" (depending on the time), explained later.
+         
+        Returns 
+        _________
+        None
+        _________________________
+    
+        Cécile
+        """
+        
     def evol(self,nuc,T,Pn):
         for i in range(2):
             if T==0:
@@ -34,9 +54,25 @@ class Model(object):
                 r=random()
                 if r<=self.Pdn:
                     nuc[1]=0
-            pourquoifairesimplequandonpeutfairecomplique=[0,1]
-            pourquoifairesimplequandonpeutfairecomplique.remove(i)
-            j=pourquoifairesimplequandonpeutfairecomplique[0]
+            """Impact of the neighbors on the methylation
+        
+            This function changes the probability of methylation depending on the neighbors methylation : if one or two neighbor(s) of one histones are methylated, this histone has more changes to be methylated. 
+
+            Parameters
+            __________
+            l = 
+            
+
+            Returns 
+            _________
+            None
+            _________________________
+    
+            Cécile
+            """
+            l=[0,1]
+            l.remove(i)
+            j=l[0]
             M=self.M0+nuc[i,1]*self.MT
             if nuc[j,0]==2:
                 M=self.M0+nuc[i,1]*self.MT+self.coopm*self.Mcoopm
