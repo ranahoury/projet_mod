@@ -132,7 +132,7 @@ def draw(L):
     Rana  
     """
     p=[]
-    fig =plt.figure(0)
+    fig =plt.figure(1)
     for i,l in enumerate(L):
         p=saving.unlist(l)
         p=np.array(p)
