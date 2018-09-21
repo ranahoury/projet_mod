@@ -70,7 +70,7 @@ class Model(object):
             if T==1:
                 r=random()
                 if r<=self.Pdn:
-                    nuc[1]=0
+                    nuc[i,1]=0
             l=[0,1]
             l.remove(i)
             j=l[0]
