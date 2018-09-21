@@ -4,7 +4,7 @@ from pylab import*
 import matplotlib.pyplot as plt
 
 class Model(object):
-    def __init__(self,x=0.008,y=0.008,z=0.008,a=0.008,g=0.002,coopa=0.008,coopm=0.008,eps=0.6,Pdn=10**-4,C=10**-5,K=150):
+    def __init__(self,x=0.002,y=0.002,z=0.002,a=0.002,g=0.002,coopa=0.008,coopm=0.008,eps=0.6,Pdn=10**-4,C=10**-5,K=150):
         self.x=x
         self.y=y
         self.z=z
