@@ -11,14 +11,11 @@ def plot_nuc(L,abscisse,figure):
     Parameters
     __________
     
-    param1 : L
-             A list of histones/nucleosomes containing the information about epigenetic marks (0 - acetylated, 1 - unmodified, 2 - methylated), as well     as whether a histone=>nucleosome is nucleated or not (0 - non-nucleated, 1 - nucleated).
+    L: A list of histones/nucleosomes containing the information about epigenetic marks (0 - acetylated, 1 - unmodified, 2 - methylated),          as well as whether a histone=>nucleosome is nucleated or not (0 - non-nucleated, 1 - nucleated).
              
-    param2 : abscisse
-             A value to be specified to determine the heigth of 'the nucleosome line'.
+    abscisse: A value to be specified to determine the heigth of 'the nucleosome line'.
              
-    param3 : figure
-             The parameter has to be associated with the plotting function => #1.
+    figure: The parameter has to be associated with the plotting function => #1.
              
     Returns
     _______
@@ -78,7 +75,7 @@ def histo_nuc(L,fig):
     Parameters
     __________
     
-    L: list of histones/nucleosomes containing the information about epigenetic marks (0 - acetylated, 1 - unmodified, 2 - methylated), as well as whether a histone=>nucleosome is nucleated or not (0 - non-nucleated, 1 - nucleated).
+    L: list of histones/nucleosomes containing the information about epigenetic marks (0 - acetylated, 1 - unmodified, 2 - methylated), as        well as whether a histone=>nucleosome is nucleated or not (0 - non-nucleated, 1 - nucleated).
     
     fig: the figure to be used to present the new histogram 
     
@@ -122,7 +119,7 @@ def draw(L):
     
     Parameters
     __________
-    L: list of histones/nucleosomes containing the information about epigenetic marks (0 - acetylated, 1 - unmodified, 2 - methylated), as well as whether a histone=>nucleosome is nucleated or not (0 - non-nucleated, 1 - nucleated).
+    L: list of histones/nucleosomes containing the information about epigenetic marks (0 - acetylated, 1 - unmodified, 2 - methylated), as        well as whether a histone=>nucleosome is nucleated or not (0 - non-nucleated, 1 - nucleated).
     
     Returns
     _______
