@@ -34,9 +34,9 @@ class Model(object):
                 r=random()
                 if r<=self.Pdn:
                     nuc[1]=0
-            pourquoifairesimplequandonpeutfairecomplique=[0,1]
-            pourquoifairesimplequandonpeutfairecomplique.remove(i)
-            j=pourquoifairesimplequandonpeutfairecomplique[0]
+            l=[0,1]
+            l.remove(i)
+            j=l[0]
             M=self.M0+nuc[i,1]*self.MT
             if nuc[j,0]==2:
                 M=self.M0+nuc[i,1]*self.MT+self.coopm*self.Mcoopm
@@ -51,10 +51,36 @@ class Model(object):
                 nuc[i,0]=2
         return(nuc)
 
+def save_nuc(lis,name="list_of_all.txt"):
+    np.savetxt(name, np.ndarray.flatten(np.array(lis)), delimiter = ",")
+    return
+    
+
+def load_nuc(name="list_of_all.txt"):    
+    lisflat=np.genfromtxt(name, delimiter=",")
+    lis=lisflat.reshape((int(len(lisflat)/(35*2*2)),35,2,2))
+    return (lis)
+
+def unlist(L):
+    M=[]
+    for i in L:
+        for j in i:
+            M+=[j]
+    return (M)
+
+def activation(etat):
+    etat=np.array(unlist(etat))
+    etat=np.ndarray.tolist(etat)
+    act=0
+    for nucleation in [0,1]:
+        act=act+etat.count([0, nucleation])
+    return act
+
 def simulation(winter, spring,n=35): #winter et srping en jours
     model=Model()
     L=np.array([[[0,0],[0,0]] for i in range(n)])
-    liste=[]
+    liste=[np.copy(L)]
+    gene=[]
     T=0
     for i in range(winter*1440):
         Pn=(model.C*(i**2)/(model.K*(1440**2)+i**2))
@@ -62,10 +88,14 @@ def simulation(winter, spring,n=35): #winter et srping en jours
             L[j]= model.evol(L[j],T,Pn)
         if i%14400==0:                      #7200 minutes =5 jours
             liste.append(np.copy(L))
+        if i%60==0:
+            gene.append(activation(L))
     T=1
     for i in range(spring*1440):
         for j in range(len(L)):
             L[j]= model.evol(L[j],T,Pn)
         if i%14400==0:
             liste.append(np.copy(L))
-    return(liste)
+        if i%60==0:
+            gene.append(activation(L))
+    return(liste,gene)
