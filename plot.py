@@ -18,7 +18,7 @@ def plot_nuc(L,abscisse,figure):
              A value to be specified to determine the heigth of 'the nucleosome line'.
              
     param3 : figure
-             The parameter have to be associated with the plotting function => #1.
+             The parameter has to be associated with the plotting function => #1.
              
     Returns
     _______
