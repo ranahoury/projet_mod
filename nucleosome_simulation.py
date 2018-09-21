@@ -54,7 +54,7 @@ class Model(object):
                 r=random()
                 if r<=self.Pdn:
                     nuc[1]=0
-<<<<<<< HEAD
+
             """Impact of the neighbors on the methylation
         
             This function changes the probability of methylation depending on the neighbors methylation : if one or two neighbor(s) of one histones are methylated, this histone has more changes to be methylated. 
@@ -71,8 +71,7 @@ class Model(object):
     
             Cécile
             """
-=======
->>>>>>> 391d712d009cb3b42dd6358cce2078f125fed6c1
+
             l=[0,1]
             l.remove(i)
             j=l[0]
