@@ -113,8 +113,8 @@ def activation(etat):
         act=act+etat.count([0, nucleation])
     return act
 
-def simulation(winter, spring, pas=10, n=35,model=Model()): #winter et srping en jours
-     """Apply the program for each day and each nucleosome
+def simulation(winter, spring, pas=10, n=35,L=None,model=Model()): #winter et srping en jours
+    """Apply the program for each day and each nucleosome
         
         All the functions above will be applied for each nucleosome, for each winter day (T=0) and then each spring day (T=1). It will first change the probability for histones to be nucleated depending on the time (normally each minute, with 1440 minutes in one day). Then it changes the nucleosomes state at each minute. Finally it will make 2 graphs : one graph with the picture of the gene each "pas" days (i%(1440*pas)), and another for the number of nucleosomes activated each hour (i%*60)
         
@@ -135,8 +135,9 @@ def simulation(winter, spring, pas=10, n=35,model=Model()): #winter et srping en
         _________________________
     
         Cécile
-        """
-    L=np.array([[[0,0],[0,0]] for i in range(n)])
+    """
+    if L is None:
+        L=np.array([[[0,0],[0,0]] for i in range(n)])
     liste=[np.copy(L)]
     gene=[]
     T=0
