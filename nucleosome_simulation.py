@@ -164,13 +164,6 @@ def load_nuc(name="list_of_all.txt"):
     lis=lisflat.reshape((int(len(lisflat)/(35*2*2)),35,2,2))
     return (lis)
 
-def unlist(L):
-    M=[]
-    for i in L:
-        for j in i:
-            M+=[j]
-    return (M)
-
 def activation(etat):
     """ returns the number of activated histones
         Parameters
@@ -185,6 +178,15 @@ def activation(etat):
     
         Achille
     """
+    def unlist(L):
+        """
+        pick up the histones into one list
+        """
+    M=[]
+    for i in L:
+        for j in i:
+            M+=[j]
+    return (M)
     etat=np.array(unlist(etat))
     etat=np.ndarray.tolist(etat)
     act=0
