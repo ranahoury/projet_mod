@@ -182,11 +182,11 @@ def activation(etat):
         """
         pick up the histones into one list
         """
-    M=[]
-    for i in L:
-        for j in i:
-            M+=[j]
-    return (M)
+        M=[]
+        for i in L:
+            for j in i:
+                M+=[j]
+        return (M)
     etat=np.array(unlist(etat))
     etat=np.ndarray.tolist(etat)
     act=0
