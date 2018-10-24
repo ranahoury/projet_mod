@@ -65,7 +65,7 @@ class Model(object):
         self.Mcoopa=np.array([[0,0,0],[1,-1,0],[0,1,-1]])
         self.Mcoopm=np.array([[-1,1,0],[0,-1,1],[0,0,0]])
         
-    def evol(self,nuc,T,Pn):
+    def evol(self,nuc,T,Pn,Pdn=10**-4):
         """Evolution of the nucleation during the time and depending on the temperature
         
         The first part of evol function allows changing of the nucleation probability during the time (0 enucleated, 1 nucleated), depending on the cold (T==0) or the warm (T==1)
@@ -110,7 +110,7 @@ class Model(object):
                     nuc[i,1]=1
             if T==1:
                 r=random()
-                if r<=self.Pdn:
+                if r<=Pdn:
                     nuc[i,1]=0
             l=[0,1]
             l.remove(i)
@@ -212,7 +212,8 @@ def simulation(winter, spring, pas=10, n=35,L=None,model=Model()): #winter et sr
          
         Returns 
         _________
-        None
+        The list of nucleosome states every "pas" days
+        The list of the gene state every hour
         _________________________
     
         Cécile
@@ -234,6 +235,39 @@ def simulation(winter, spring, pas=10, n=35,L=None,model=Model()): #winter et sr
     for i in range(spring*1440):
         for j in range(len(L)):
             L[j]= model.evol(L[j],T,Pn)
+        if i%(1440*pas)==0:
+            liste.append(np.copy(L))
+        if i%60==0:
+            gene.append(activation(L))
+    return(liste,gene)
+
+def smooth_transition(winter=60, spring=60, pas=10, n=35,L=None,model=Model()): #winter et srping en jours
+    """Same principle that simulation() function with Pdn starting at 10**-6 and going progresssively to 10**-4
+        _________________________
+    
+        Achille
+    """
+    if L is None:
+        L=np.array([[[0,0],[0,0]] for i in range(n)])
+    liste=[np.copy(L)]
+    gene=[]
+    T=0
+    for i in range(winter*1440):
+        Pn=(model.C*(i**2)/(model.K*(1440**2)+i**2))
+        for j in range(len(L)):
+            L[j]= model.evol(L[j],T,Pn)
+        if i%(1440*pas)==0:                      #1440 minutes =1 jours
+            liste.append(np.copy(L))
+        if i%60==0:
+            gene.append(activation(L))
+    T=1
+    Pdn0=10**-6
+    Pdnmax=10**-4
+    Tc=5*1440             #caracteristic of the time it will take to reach Pdnmax
+    for i in range(spring*1440):
+        Pdn=Pdn0+Pdnmax*(1-exp(-i/Tc))  #this function goes from Pdn0 to Pdnmax (+Pdn0 but its insignificant) in about 10T
+        for j in range(len(L)):
+            L[j]= model.evol(L[j],T,Pn,Pdn)
         if i%(1440*pas)==0:
             liste.append(np.copy(L))
         if i%60==0:
